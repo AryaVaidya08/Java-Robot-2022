@@ -11,6 +11,7 @@ public class DriveWait extends CommandBase {
 
     public DriveWait(double time) {
         this.time = time;
+        timer = new Timer();
         addRequirements(Robot.drivebase);
     }
 

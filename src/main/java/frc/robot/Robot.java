@@ -3,6 +3,8 @@ package frc.robot;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax.IdleMode;
 
+import frc.robot.commands.drive.DefaultDrive;
+import frc.robot.commands.drive.DriveWait;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -24,7 +26,6 @@ import frc.robot.autonomous.AutonomousProgram;
 import frc.robot.commands.climber.DefaultClimb;
 import frc.robot.commands.drive.DefaultDrive;
 //import frc.robot.commands.drive.DriveHold;
-import frc.robot.commands.drive.DriveWait;
 //import frc.robot.commands.drive.SetDriveSpeed;
 import frc.robot.commands.led.LEDRainbowRotate;
 import frc.robot.commands.led.LEDSolidColor;
@@ -84,30 +85,36 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		// Configure the joystick and controller bindings
-		configureButtonBindings();
 
-		// Reset everything back to default
-		navX.calibrate();
-		navX.reset();
+		try {
+			configureButtonBindings();
 
-		// Reset motor encoders for all sub systems
-		//drivebase.resetEncoders();
-		climb.resetEncoders();
+			// Reset everything back to default
+			navX.calibrate();
+			navX.reset();
 
-		// This runs if no other commands are scheduled (teleop)
-		//drivebase.setDefaultCommand(new DefaultDrive());
-		climb.setDefaultCommand(new DefaultClimb());
-		ledStrip.setDefaultCommand(new LEDRainbowRotate());
+			// Reset motor encoders for all sub systems
+			//drivebase.resetEncoders();
+			climb.resetEncoders();
 
-		// Set limited drive speed for normal driving
-		//drivebase.setMaxOutput(0.75);
+			// This runs if no other commands are scheduled (teleop)
+			drivebase.setDefaultCommand(new DefaultDrive());
+			climb.setDefaultCommand(new DefaultClimb());
+			ledStrip.setDefaultCommand(new LEDRainbowRotate());
 
-		/* Shuffleboard Stuff */
-		Autonomous.init();
-		AutonomousProgram.addAutosToShuffleboard();
+			// Set limited drive speed for normal driving
+			//drivebase.setMaxOutput(0.75);
 
-		// Start Camera
-		CameraServer.startAutomaticCapture();
+			/* Shuffleboard Stuff */
+			Autonomous.init();
+			AutonomousProgram.addAutosToShuffleboard();
+
+			// Start Camera
+			CameraServer.startAutomaticCapture();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -117,12 +124,12 @@ public class Robot extends TimedRobot {
 
 		// Schedule the selected autonomous command group
 		if (autonomousCommand != null) {
-			//CommandScheduler.getInstance().schedule(
+			CommandScheduler.getInstance().schedule(
 					// To achieve the configured delay, use a sequential group that contains a wait
-					// command
-					//new SequentialCommandGroup(
-					//		new DriveWait(autoDelayChooser.getSelected()),
-					//		autonomousCommand));
+					 //command
+					new SequentialCommandGroup(
+							new DriveWait(autoDelayChooser.getSelected()),
+							autonomousCommand));
 		}
 
 		// Match LEDs color to team
@@ -193,6 +200,11 @@ public class Robot extends TimedRobot {
 		 * robot's periodic
 		 * block in order for anything in the Command-based framework to work.
 		 */
-		CommandScheduler.getInstance().run();
+		try {
+			drivebase.getDiffDrive().feed();
+			CommandScheduler.getInstance().run();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

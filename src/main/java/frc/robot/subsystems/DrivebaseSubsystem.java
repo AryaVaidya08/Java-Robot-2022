@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.MotorSafety;
 import java.beans.Encoder;
 
 public class DrivebaseSubsystem extends SubsystemBase {
@@ -118,6 +119,7 @@ public class DrivebaseSubsystem extends SubsystemBase {
     }
 
     public void startTankDrive(double leftSpeed, double rightSpeed) {
+        //MotorSafety.checkMotors();
         diffDriveSystem.tankDrive(leftSpeed, rightSpeed);
     }
 

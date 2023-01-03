@@ -16,7 +16,7 @@ import java.beans.Encoder;
 
 import javax.swing.text.html.HTMLDocument.BlockElement;
 
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+//import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax.IdleMode;

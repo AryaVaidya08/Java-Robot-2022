@@ -6,7 +6,7 @@ import frc.robot.Robot;
 
 public class DefaultDrive extends CommandBase {
 
-    DefaultDrive() {
+    public DefaultDrive() {
         addRequirements(Robot.drivebase);
     }
 
