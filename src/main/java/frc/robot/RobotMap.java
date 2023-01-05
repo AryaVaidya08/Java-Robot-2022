@@ -33,7 +33,8 @@ public final class RobotMap {
 		public static final int RIGHT_CANCODER_ID = 6;
 
 		/* Drivebase Motor Inversion */
-		public static final boolean LEFT_FRONT_SPARK_INVERTED = true;
+		public static final boolean LEFT_FRONT_SPARK_INVERTED = true
+		;
 		public static final boolean LEFT_BACK_SPARK_INVERTED = true;
 		public static final boolean RIGHT_FRONT_SPARK_INVERTED = false;
 		public static final boolean RIGHT_BACK_SPARK_INVERTED = false;

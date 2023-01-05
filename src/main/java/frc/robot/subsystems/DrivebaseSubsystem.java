@@ -131,7 +131,8 @@ public class DrivebaseSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("X Pos", Robot.getNavX().getQuaternionX());
-        SmartDashboard.putNumber("Y Pos", Robot.getNavX().getQuaternionY());
+        SmartDashboard.putNumber("Get Angle", Robot.getNavX().getAngle());
+        SmartDashboard.putNumber("Get Rate", Robot.getNavX().getRate());
+        //SmartDashboard.putNumber("Y Pos", Robot.getNavX().getQuaternionY());
     }
 }
